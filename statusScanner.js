@@ -1,4 +1,4 @@
-//var casper = require('casper').create();
+// var casper = require('casper').create();
 var links = [];
 
 casper.start();
@@ -27,21 +27,25 @@ casper.then(function() {
   // Loop on array
   casper.each(links, function(self, link) {
     i++
-    self.thenOpen((link + links[i]), function(response) {
+    self.thenOpen((link), function(response) {
       utils.dump(response.status);
-      if (response == undefined|| response.status >= 400) this.echo("FAIL", 'RED_BAR');
+      //if (response == undefined || response.status >= 400) this.echo("FAIL: ", 'RED_BAR');
     });
   });
 });
 
+casper.on('http.status.404', function(resource) {
+  this.echo('Status 404: ' + resource.url, 'RED_BAR');
+});
+
 casper.on('http.status.500', function(resource) {
-  this.echo('This url is 500: ' + resource.url, 'RED_BAR');
+  this.echo('Status 500: ' + resource.url, 'RED_BAR');
 });
 
 casper.on('http.status.200', function(resource) {
-  this.echo('This url is 200: ' + resource.url, 'GREEN_BAR')
+  this.echo('Status 200: ' + resource.url, 'GREEN_BAR')
 });
 
-casper.run(function() {
+  casper.run(function() {
   casper.exit();
 });
