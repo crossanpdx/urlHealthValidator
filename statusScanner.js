@@ -37,13 +37,24 @@ casper.then(function() {
 casper.then(function() {
     var utils = require('utils');
     var http = require('http');
+    var fs = require('fs');
+    var currentTime = new Date();
+    var month = currentTime.getMonth() + 1;
+    var day = currentTime.getDate();
+    var year = currentTime.getFullYear();
+    var path = '.\\logs\\results-'+year + '-' + month + '-' + day + '.txt';
 
   this.each(links, function(self, link) {
     self.thenOpen((link), function(response) {
       console.log('REPORTING STATUS: ' + response.status + '\nFROM: ' + link);
-      var path = 'log.txt';
-      var data = 'REPORTING STATUS: ' + response.status + '\nFROM: ' + link;
-      fs.write(path, data, 'w');
+
+      var statusReport = 'REPORTING STATUS: ' + response.status + '\nFROM: ' + link + '\n';
+      try{
+        fs.write(path, statusReport, 'a');
+      } catch(error){
+        console.log(error);
+      }
+
     });
   });
 });
