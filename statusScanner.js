@@ -1,4 +1,7 @@
 var links = [];
+var fs = require('fs');
+var utils = require('utils');
+var http = require('http');
 
 var casper = require('casper').create({
   httpStatusHandlers: {
@@ -18,7 +21,6 @@ var casper = require('casper').create({
 casper.start();
 
 casper.then(function() {
-      var fs = require('fs');
       var i = 0;
 
       urlFile = fs.open(this.cli.get('filename'), 'r');
@@ -35,14 +37,11 @@ casper.then(function() {
 });
 
 casper.then(function() {
-    var utils = require('utils');
-    var http = require('http');
-    var fs = require('fs');
-    var currentTime = new Date();
-    var month = currentTime.getMonth() + 1;
-    var day = currentTime.getDate();
-    var year = currentTime.getFullYear();
-    var path = '.\\logs\\results-'+year + '-' + month + '-' + day + '.txt';
+  var currentTime = new Date();
+  var month = currentTime.getMonth() + 1;
+  var day = currentTime.getDate();
+  var year = currentTime.getFullYear();
+  var path = '.\\logs\\results-'+year + '-' + month + '-' + day + '.txt';
 
   this.each(links, function(self, link) {
     self.thenOpen((link), function(response) {
@@ -54,7 +53,6 @@ casper.then(function() {
       } catch(error){
         console.log(error);
       }
-
     });
   });
 });
