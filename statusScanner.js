@@ -5,6 +5,9 @@ var http = require('http');
 
 var casper = require('casper').create({
   httpStatusHandlers: {
+    401: function(self, resource){
+      self.echo(resource.url + '\n>> This request requires HTTP authentication (401)', 'WARN_BAR')
+    },
     404: function(self, resource){
       self.echo(resource.url + '\n>> Not found (404)', 'RED_BAR')
     },
