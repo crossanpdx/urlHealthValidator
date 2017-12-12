@@ -1,13 +1,29 @@
-//var casper = require('casper').create();
 var links = [];
+var fs = require('fs');
+var utils = require('utils');
+var http = require('http');
+
+var casper = require('casper').create({
+  httpStatusHandlers: {
+    404: function(self, resource){
+      self.echo(resource.url + '\n>> Not found (404)', 'RED_BAR')
+    },
+    500: function(self, resource){
+      self.echo(resource.url + '\n>> Internal server error (500)', 'RED_BAR')
+    },
+    200: function(self, resource){
+      self.echo(resource.url + '\n>> OK (200)', 'GREEN_BAR')
+    }
+  },
+  verbose: true
+});
 
 casper.start();
 
 casper.then(function() {
-      var fs = require('fs');
       var i = 0;
 
-      urlFile = fs.open(casper.cli.get('filename'), 'r');
+      urlFile = fs.open(this.cli.get('filename'), 'r');
       line = urlFile.readLine();
 
       // This imports data from file into an array
@@ -21,27 +37,26 @@ casper.then(function() {
 });
 
 casper.then(function() {
-    var utils = require('utils');
-    var http = require('http');
-    var i = -1;
-  // Loop on array
-  casper.each(links, function(self, link) {
-    i++
-    self.thenOpen((link + links[i]), function(response) {
-      utils.dump(response.status);
-      if (response == undefined|| response.status >= 400) this.echo("FAIL", 'RED_BAR');
+  var currentTime = new Date();
+  var month = currentTime.getMonth() + 1;
+  var day = currentTime.getDate();
+  var year = currentTime.getFullYear();
+  var path = '.\\logs\\results-'+year + '-' + month + '-' + day + '.txt';
+
+  this.each(links, function(self, link) {
+    self.thenOpen((link), function(response) {
+      console.log('REPORTING STATUS: ' + response.status + '\nFROM: ' + link);
+
+      var statusReport = 'REPORTING STATUS: ' + response.status + '\nFROM: ' + link + '\n';
+      try{
+        fs.write(path, statusReport, 'a');
+      } catch(error){
+        console.log(error);
+      }
     });
   });
 });
 
-casper.on('http.status.500', function(resource) {
-  this.echo('This url is 500: ' + resource.url, 'RED_BAR');
-});
-
-casper.on('http.status.200', function(resource) {
-  this.echo('This url is 200: ' + resource.url, 'GREEN_BAR')
-});
-
 casper.run(function() {
-  casper.exit();
+  this.echo('\n### STATUS SCANNER DONE ###').exit();
 });

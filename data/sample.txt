@@ -1,0 +1,13 @@
+http://yahoo.com
+https://httpstat.us/404
+http://cayuse.com
+http://facebook.com
+http://bing.com
+http://nike.com
+https://httpstat.us/500
+https://nd.cayuse424.com
+https://nd.cayuse424.com/437/login.do
+https://nd.cayuse424.com/sp/index.cfm
+https://sfsu.cayuse424.com/sp/index.cfm
+https://american.cayuse424.com/rs/irb/#dashboard
+https://sds-or.cayuse424.com/561/villanova/reports/
