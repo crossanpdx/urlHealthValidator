@@ -1,0 +1,14 @@
+{
+  "name": "urlHealthChecker",
+  "version": "1.0.0",
+  "description": "Report HTTP Responses from Customer URLs",
+  "main": "statusScanner.js",
+  "scripts": {
+    "task": "casperjs statusScanner.js --filename='./data/sample.txt'"
+  },
+  "author": "Ryan Crossan",
+  "dependencies": {
+    "casperjs": "^1.1.4",
+    "phantomjs": "^2.1.1"
+  }
+}
