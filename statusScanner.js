@@ -44,8 +44,7 @@ casper.then(function() {
   var month = currentTime.getMonth() + 1;
   var day = currentTime.getDate();
   var year = currentTime.getFullYear();
-  //var path = './logs/results-'+year + '-' + month + '-' + day + '.html';
-  var path = './logs/index.html'
+  var path = './logs/results-'+year + '-' + month + '-' + day + '.html';
 
   this.each(links, function(self, link) {
     self.thenOpen((link), function(response) {
