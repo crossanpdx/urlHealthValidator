@@ -27,3 +27,4 @@ HTTP Status checker script to read in urls from a file and check each url in lis
 - Command line format to pass filename:
 
 **casperjs test statusScanner.js --filename=<path to file>**
+# urlHealthValidator
