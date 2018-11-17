@@ -1,4 +1,4 @@
-# urlHealthChecker
+#  urlHealthValidator
 
 HTTP Status checker script to read in urls from a file and check each url in list of the site http status. This is to verify if a site is healthy.
 
@@ -27,4 +27,4 @@ HTTP Status checker script to read in urls from a file and check each url in lis
 - Command line format to pass filename:
 
 **casperjs test statusScanner.js --filename=<path to file>**
-# urlHealthValidator
+
